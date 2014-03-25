@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Intro.js - an Introduction to JavaScript</title>
+
+    <meta name="description" content="A presentation for Tech Talent South, Asheville. March 24, 2014"/>
+    <meta name="author" content="Lance Ball <lball@redhat.com>">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/github.css">
+
+    <link rel="stylesheet" href="css/preso.css">
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Intro.js</h1>
+          <h2>Getting Started With Javascript</h2>
+          <!-- who I am -->
+          <p class="fragment roll-in">
+          <a href="http://lanceball.com">Lance Ball</a> 
+          / <a href="http://twitter.com/lanceball">@lanceball</a>
+          / <a href="http://lanceball.com">http://lanceball.com</a>
+          </p>
+        </section>
+
+        <section>
+          <h2>Who Am I?</h2>
+          <h3>Senior Software Engineer</h3>
+          <h4>Red Hat, JBoss, Project Odd</h4>
+          <img class="logo" src="images/redhat-logo.png" alt="Red Hat logo" />
+          <br/>
+          <p style="align:center">
+          <img class="logo" src="images/jbosscommunity-logo.png" alt="JBoss community logo" /> 
+          <img class="logo" src="images/projectodd-logo.png" alt="Project Odd logo" />
+          </p>
+        </section>
+
+        <section>
+          <h2>Project Odd</h2>
+          <p>
+            TorqueBox, Immutant, Nodyn
+          </p>
+          <p>
+            JRuby, DynJS
+          </p>
+          <p class="fragment roll-in">
+            Ruby, Javascript, Clojure, Java
+          </p>
+        </section>
+
+        <section>
+          <h2>Why Javascript?</h2>
+          <p class="fragment roll-in">It's Fun!</p>
+        </section>
+
+        <section>
+        <h2>Low Ceremony</h2>
+        <p>It's really easy to get started. Just open a browser.</p>
+        </section>
+
+        <section>
+        <h2>Ubiquitous</h2>
+        <p>Laptops, Phones, Tablets</p>
+        <p class="fragment">
+        <strong>Node.js</strong><br/>
+        A large community of server side JavaScript developers.
+        </p>
+        </section>
+
+        <section>
+        <h2>A Description (Courtesy of MDN)</h2>
+        <p>
+JavaScript® (often shortened to JS) is a lightweight, interpreted, object-oriented language with first-class functions, most known as the scripting language for Web pages, but used in many non-browser environments as well such as node.js or Apache CouchDB. It is a prototype-based, multi-paradigm scripting language that is dynamic, and supports object-oriented, imperative, and functional programming styles.
+        </p>
+        <p style="font-size:small">
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript
+        </p>
+        </section>
+
+        <section>
+          <h2>Features</h2>
+          <p class="fragment roll-in">First-class Functions</p>
+          <p class="fragment roll-in">Functional Scope</p>
+          <p class="fragment roll-in">Prototypical Inheritance</p>
+          <p class="fragment roll-in">Data Types</p>
+          <p class="fragment roll-in">DOM (Browser builtin JS)</p>
+        </section>
+
+        <section>
+          <h2>First-class Functions</h2>
+          <pre><code data-trim class="javascript">
+var add5 = function(x) {
+  return x + 5;
+}
+
+add5(10); // 15
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>First-class Functions</h2>
+          <pre><code data-trim class="javascript">
+function add2(x) {
+  return x + 2;
+}
+
+function calculate(x, f) {
+  return f(x);
+}
+
+calculate(10, add5); // 15
+calculate(10, add2); // 12
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>First-class Functions</h2>
+          <pre><code data-trim class="javascript">
+function calculator(f) {
+  return function(x) {
+    f(x);
+  }
+}
+
+var incrementFive = calculator(add5); // function
+var incrementTwo  = calculator(add2); // function
+
+incrementFive(10);                    // 15
+incrementTwo(10);                     // 12
+          </code></pre>
+        </section>
+
+        <section>
+        <h2>Functional Scope</h2>
+          <pre><code data-trim class="javascript">
+function addSquares(a,b) {
+   function square(x) {
+      return x * x;
+   }
+   return square(a) + square(b);
+}
+a = addSquares(2,3); // returns 13
+b = addSquares(3,4); // returns 25
+c = addSquares(4,5); // returns 41
+          </code></pre>
+
+<p style="font-size:small">
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope
+</p>
+        </section>
+
+        <section>
+        <h2>Functional Scope</h2>
+          <pre><code data-trim class="javascript">
+function welcomer(salutation) {
+   return function(name) {
+      return [salutation, name].join(', ');
+   }
+}
+
+var frenchHello  = welcomer('Bonjour');
+var englishHello = welcomer('Hello');
+var spanishHello = welcomer('Hola');
+
+frenchHello('Pierre');    // Bonjour, Pierre
+englishHello('James');    // Hello, James
+spanishHello('Rodrigo');  // Hola, Rodrigo
+          </code></pre>
+
+<p style="font-size:small">
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope
+</p>
+        </section>
+
+        <section>
+        <h2>Prototypical Inheritance</h2>
+          <pre><code data-trim class="javascript">
+var Chip = function() {
+  this.flavor = 'Plain';
+};
+
+Chip.prototype.crunch = function() {
+  console.log(this.flavor + ' crunch!');
+};
+
+var chip = new Chip();
+chip.crunch(); // "Plain crunch!"
+
+        </code></pre>
+        </section>
+
+        <section>
+        <h2>Prototypical Inheritance</h2>
+          <pre><code data-trim class="javascript">
+var Dorito = function() {
+  this.flavor = 'Nacho cheese';
+};
+Dorito.prototype = new Chip();
+
+var dorito = new Dorito();
+dorito.crunch(); // "Nacho cheese crunch!"
+          </code></pre>
+        </section>
+
+        <section>
+        <h2>Data Types</h2>
+        <p>Undefined, Null</p>
+        <p>Boolean, String</p>
+        <p>Number, Object</p>
+        </section>
+
+        <section>
+        <h2>Builtins</h2>
+        <p>Array, Date</p>
+        <p>RegExp, Error (and friends)</p>
+        <p>Math, JSON</p>
+        </section>
+
+        <section>
+          <h2>DOM/Browser Example</h2>
+          <pre><code data-trim class="javascript">
+function popupAlert() {
+  var msg;
+  var response = confirm("Press a button!");
+  if (response === true) {
+    msg = "You pressed OK!";
+  }
+  else {
+    msg = "You pressed Cancel!";
+  }
+  document.getElementById("demo").innerHTML=msg;
+}
+          </code></pre>
+          <script>
+          function popupAlert() {
+            var msg;
+            var response = confirm("Press a button!");
+            if (response === true) {
+              msg = "You pressed OK!";
+            }
+            else {
+              msg = "You pressed Cancel!";
+            }
+            document.getElementById("demo").innerHTML=msg;
+          }
+          </script>
+          <div id="demo"></div>
+        </section>
+
+        <section>
+        <h2>Lots and Lots of Tools</h2>
+        <p>DOM Manipulation: JQuery http://jquery.com</p>
+        <p>Functional Utilities: Underscore, Lodash</p>
+        <p>Model/View: Angular.js, Backbone.js</p>
+        <p>Package Management: NPM</p>
+        <p>Project Packaging and Build: Bower, Grunt</p>
+        <p>BaaS: Meteor.js, Derby</p>
+        </section>
+
+        <section>
+          <h2>Resources</h2>
+          <ul>
+            <li>JSFiddle - <a href="http://jsfiddle.net/">http://jsfiddle.net</a></li>
+            <li>MDN - <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">https://developer.mozilla.org/</a></li>
+            <li>Douglas Crockford - <a href="http://javascript.crockford.com/">http://javascript.crockford.com/</a></li>
+            <li>Annotated ECMAScript 5.1 - <a href="http://es5.github.io/">http://es5.github.io/</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Thanks &amp; Questions</h2>
+          <img src="images/the-end.jpg" alt="The end"/>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+
+  </body>
+</html>
